@@ -3,12 +3,12 @@
 .btn-back:hover{background:#e5e7eb}
 
 .option.correct-reveal{background:#dcfce7 !important;border-color:#22c55e !important;color:#166534}
-.option.correct-reveal::after{content:" ✓";font-weight:700;color:#16a34a}
+.option.correct-reveal::after{content:" \2713";font-weight:700;color:#16a34a}
 .option.wrong-reveal{background:#fee2e2 !important;border-color:#ef4444 !important;color:#991b1b}
-.option.wrong-reveal::after{content:" ✗";font-weight:700;color:#dc2626}
+.option.wrong-reveal::after{content:" \2717";font-weight:700;color:#dc2626}
 .option.review-locked{pointer-events:none;cursor:default}
 </style></head><body><div class="container">
-<div class="header"><h1>C1 Job Skills 2 - Class 1 Homework</h1><p>Effective Communication at Work and School • Zero &amp; First Conditionals</p></div>
+<div class="header"><h1>C1 Job Skills 2 - Class 1 Homework</h1><p>Effective Communication at Work and School &bull; Zero &amp; First Conditionals</p></div>
 <div class="section active" id="start"><div class="card"><label>Your Full Name</label><input type="text" id="studentName" placeholder="Enter your name..."><label style="margin-top:12px">Your Class</label>
 <input type="hidden" id="teacherName" value="">
 <select id="className" style="width:100%;padding:14px;border:2px solid #e0e0e0;border-radius:12px;font-size:16px;margin-bottom:15px" onchange="setTeacher(this)">
@@ -17,13 +17,13 @@
 <option value="3095" data-teacher="Hector Amaya">3095 - Mon/Wed 8:30 PM (Hector)</option>
 <option value="3100" data-teacher="Hector Amaya">3100 - Tue/Thu 6:30 PM (Hector)</option>
 </optgroup>
-</select><button class="btn" onclick="startQuiz()">Start Homework →</button><div class="note">This homework focuses on teamwork communication, active listening, workplace vocabulary, and zero/first conditionals.</div></div></div>
-<div class="section" id="s1"><div class="card"><div class="progress"><div class="progress-bar" style="width:20%"></div></div><h2>1. Reading</h2><div class="reading-box"><p><strong>Improving Team Communication</strong></p><p>A department is reviewing its meeting culture because discussions have become repetitive and poorly structured. If people arrive without a clear agenda, they tend to repeat points rather than move the discussion forward.</p><p>The team leader notices that when employees feel unsettled, they often remain silent instead of voicing concerns. To address the issue, the team drafts a new format for meetings.</p><p>If the staff submits their topics in advance, the facilitator will group them by theme. If the agenda is clear, participants will understand what decisions need to be made.</p></div><div id="readingQuestions"></div><button class="btn" onclick="checkS1()">Continue →</button></div></div>
-<div class="section" id="s2"><div class="card"><button type="button" class="btn-back" onclick="showSection('s1')">← Back</button><div class="progress"><div class="progress-bar" style="width:40%"></div></div><h2>2. Vocabulary</h2><p class="small">Match the key term to its best meaning.</p><div class="word-bank" id="wordBank"></div><div id="vocabDrops"></div><button class="btn" onclick="checkS2()">Continue →</button><div class="tip-box"><strong>Real-life English tip:</strong> At C1 level, precise workplace verbs like address, voice, and draft make your ideas sound more professional.</div></div></div>
-<div class="section" id="s3"><div class="card"><button type="button" class="btn-back" onclick="showSection('s2')">← Back</button><div class="progress"><div class="progress-bar" style="width:60%"></div></div><h2>3. Writing</h2><p class="small">Write 7–9 sentences explaining how communication could improve in a workplace, school, or community setting. Use at least two conditionals.</p><textarea id="writing"></textarea><p class="small" style="text-align:right">Words: <span id="wc">0</span></p><div class="tip-box"><strong>Grammar tip:</strong> Use zero conditionals for patterns and first conditionals for realistic consequences or plans.</div><div id="wFeedback" class="feedback hidden"></div><button class="btn" id="wBtn" onclick="checkWriting()">Get Feedback →</button><button class="btn hidden" id="wNext" onclick="showSection('s4')">Continue →</button></div></div>
-<div class="section" id="s4"><div class="card"><button type="button" class="btn-back" onclick="showSection('s3')">← Back</button><div class="progress"><div class="progress-bar" style="width:80%"></div></div><h2>4. Speaking</h2><p class="small">Speak for 45–60 seconds about a communication problem and propose a realistic solution.</p><div class="record-btn" id="recBtn" onclick="toggleRec()"><div class="record-dot"></div></div><div class="timer" id="timer">0:00</div><div class="status" id="recStatus">Click to start recording</div><audio id="audio" controls class="hidden"></audio><div id="transcriptBox" class="transcript-box hidden"></div><div id="sFeedback" class="feedback hidden"></div><button class="btn" id="sBtn" onclick="checkSpeaking()" disabled>Continue →</button></div></div>
-<div class="section" id="s5"><div class="card"><button type="button" class="btn-back" onclick="showSection('s4')">← Back</button><div class="progress"><div class="progress-bar" style="width:100%"></div></div><h2>5. Grammar & Usage</h2><div id="grammarQuestions"></div><button class="btn btn-orange" onclick="submitFinal()">Submit Homework ✓</button></div></div>
-<div class="section" id="results"><div class="score-card"><p style="opacity:.85">Homework Complete!</p><div class="score-big" id="finalPct">0%</div><p id="studentDisplay"></p><div class="scores"><div><label>Reading</label><span id="scL">0/3</span></div><div><label>Vocab</label><span id="scV">0/6</span></div><div><label>Writing</label><span id="scW">0/20</span></div><div><label>Speaking</label><span id="scS">0/20</span></div><div><label>Grammar</label><span id="scG">0/8</span></div></div><button type="button" class="btn" onclick="reviewGrammar()" style="background:#f3f4f6;color:#5B5091;border:1px solid #d1d5db;margin-bottom:10px">📝 Review Your Grammar Answers</button><button class="btn btn-orange" id="submitBtn" style="margin-top:20px" onclick="submitToTeacher()">Finish →</button><div id="submitStatus" style="display:none;margin-top:16px;background:#f0fdf4;border:2px solid #22c55e;border-radius:12px;padding:16px;text-align:center;color:#15803d"></div></div></div></div><script>
+</select><button class="btn" onclick="startQuiz()">Start Homework &rarr;</button><div class="note">This homework focuses on teamwork communication, active listening, workplace vocabulary, and zero/first conditionals.</div></div></div>
+<div class="section" id="s1"><div class="card"><div class="progress"><div class="progress-bar" style="width:20%"></div></div><h2>1. Reading</h2><div class="reading-box"><p><strong>Improving Team Communication</strong></p><p>A department is reviewing its meeting culture because discussions have become repetitive and poorly structured. If people arrive without a clear agenda, they tend to repeat points rather than move the discussion forward.</p><p>The team leader notices that when employees feel unsettled, they often remain silent instead of voicing concerns. To address the issue, the team drafts a new format for meetings.</p><p>If the staff submits their topics in advance, the facilitator will group them by theme. If the agenda is clear, participants will understand what decisions need to be made.</p></div><div id="readingQuestions"></div><button class="btn" onclick="checkS1()">Continue &rarr;</button></div></div>
+<div class="section" id="s2"><div class="card"><button type="button" class="btn-back" onclick="showSection('s1')">&larr; Back</button><div class="progress"><div class="progress-bar" style="width:40%"></div></div><h2>2. Vocabulary</h2><p class="small">Match the key term to its best meaning.</p><div class="word-bank" id="wordBank"></div><div id="vocabDrops"></div><button class="btn" onclick="checkS2()">Continue &rarr;</button><div class="tip-box"><strong>Real-life English tip:</strong> At C1 level, precise workplace verbs like address, voice, and draft make your ideas sound more professional.</div></div></div>
+<div class="section" id="s3"><div class="card"><button type="button" class="btn-back" onclick="showSection('s2')">&larr; Back</button><div class="progress"><div class="progress-bar" style="width:60%"></div></div><h2>3. Writing</h2><p class="small">Write 7&ndash;9 sentences explaining how communication could improve in a workplace, school, or community setting. Use at least two conditionals.</p><textarea id="writing"></textarea><p class="small" style="text-align:right">Words: <span id="wc">0</span></p><div class="tip-box"><strong>Grammar tip:</strong> Use zero conditionals for patterns and first conditionals for realistic consequences or plans.</div><div id="wFeedback" class="feedback hidden"></div><button class="btn" id="wBtn" onclick="checkWriting()">Continue &rarr;</button><button class="btn hidden" id="wNext" onclick="showSection('s4')">Continue &rarr;</button></div></div>
+<div class="section" id="s4"><div class="card"><button type="button" class="btn-back" onclick="showSection('s3')">&larr; Back</button><div class="progress"><div class="progress-bar" style="width:80%"></div></div><h2>4. Speaking</h2><p class="small">Speak for 45&ndash;60 seconds about a communication problem and propose a realistic solution.</p><div class="record-btn" id="recBtn" onclick="toggleRec()"><div class="record-dot"></div></div><div class="timer" id="timer">0:00</div><div class="status" id="recStatus">Click to start recording</div><audio id="audio" controls class="hidden"></audio><div id="transcriptBox" class="transcript-box hidden"></div><div id="sFeedback" class="feedback hidden"></div><button class="btn" id="sBtn" onclick="checkSpeaking()" disabled>Continue &rarr;</button></div></div>
+<div class="section" id="s5"><div class="card"><button type="button" class="btn-back" onclick="showSection('s4')">&larr; Back</button><div class="progress"><div class="progress-bar" style="width:100%"></div></div><h2>5. Grammar &amp; Usage</h2><div id="grammarQuestions"></div><button class="btn btn-orange" onclick="submitFinal()">Submit Homework &check;</button></div></div>
+<div class="section" id="results"><div class="score-card"><p style="opacity:.85">Homework Complete!</p><div class="score-big" id="finalPct">0%</div><p id="studentDisplay"></p><div class="scores"><div><label>Reading</label><span id="scL">0/3</span></div><div><label>Vocab</label><span id="scV">0/6</span></div><div><label>Writing</label><span id="scW">&#128105;&#8205;&#127979;</span></div><div><label>Speaking</label><span id="scS">0/20</span></div><div><label>Grammar</label><span id="scG">0/8</span></div></div><button type="button" class="btn" onclick="reviewGrammar()" style="background:#f3f4f6;color:#5B5091;border:1px solid #d1d5db;margin-bottom:10px">&#128221; Review Your Grammar Answers</button><button class="btn btn-orange" id="submitBtn" style="margin-top:20px" onclick="submitToTeacher()">Finish &rarr;</button><div id="submitStatus" style="display:none;margin-top:16px;background:#f0fdf4;border:2px solid #22c55e;border-radius:12px;padding:16px;text-align:center;color:#15803d"></div></div></div></div><script>
 const readingQBank=[{"q": "Why are the meetings ineffective?", "opts": ["They repeat points and lack structure", "They are too short", "The room is too small"], "correct": 0}, {"q": "What happens when employees feel unsettled?", "opts": ["They remain silent", "They speak more clearly", "They submit better agendas"], "correct": 0}, {"q": "What will happen if the staff submits topics in advance?", "opts": ["The facilitator will group them by theme", "Meetings will be cancelled", "People will stop asking questions"], "correct": 0}, {"q": "Why is a clear agenda useful?", "opts": ["It helps people know what decisions need to be made", "It removes all disagreement", "It replaces preparation"], "correct": 0}];
 const vocabPairs=[{"word": "address", "def": "to deal with an issue directly"}, {"word": "voice", "def": "to express an opinion or concern"}, {"word": "draft", "def": "to prepare an initial version"}, {"word": "showcase", "def": "to present something attractively or strategically"}, {"word": "boost", "def": "to increase or improve"}, {"word": "set apart", "def": "to distinguish from others"}];
 const grammarQBank=[{"q": "Choose the best sentence:", "opts": ["If teams communicate clearly, misunderstandings rarely happen.", "If teams will communicate clearly, misunderstandings rarely happen.", "If teams communicated clearly, misunderstandings rarely happen."], "correct": 0}, {"q": "Choose the best sentence:", "opts": ["If you explain the timeline well, I will adjust my schedule.", "If you explains the timeline well, I adjust my schedule.", "If you will explain the timeline well, I will adjust my schedule."], "correct": 0}, {"q": "Choose the best sentence:", "opts": ["When a discussion lacks structure, people tend to repeat themselves.", "When a discussion will lack structure, people tend to repeat themselves.", "When a discussion lacked structure, people tend to repeat themselves."], "correct": 0}, {"q": "Choose the best sentence:", "opts": ["If managers showcase the purpose clearly, employees will respond more positively.", "If managers showcase the purpose clearly, employees responds more positively every time tomorrow.", "If managers will showcase the purpose clearly, employees will responded more positively."], "correct": 0}, {"q": "Choose the best sentence:", "opts": ["If participants know what is expected, meetings become more efficient.", "If participants will know what is expected, meetings become more efficient.", "If participants knew what is expected, meetings will become more efficient."], "correct": 0}, {"q": "Choose the best sentence:", "opts": ["If someone needs help, strong teammates usually offer support.", "If someone will needs help, strong teammates usually offer support.", "If someone needed help, strong teammates usually will offers support."], "correct": 0}, {"q": "Choose the best sentence:", "opts": ["If we voice concerns early, we will prevent bigger issues later.", "If we voicing concerns early, we prevent bigger issues later tomorrow.", "If we will voice concerns early, we will prevented bigger issues later."], "correct": 0}, {"q": "Choose the best sentence:", "opts": ["If people feel psychologically safe, they participate more actively.", "If people will feels psychologically safe, they participate more actively.", "If people felt psychologically safe, they participating more actively."], "correct": 0}];
@@ -123,117 +123,38 @@ function submitFinal(){
     cb.id='reviewContinueBtn';
     cb.className='btn btn-orange';
     cb.style.marginTop='15px';
-    cb.textContent='Continue to Results →';
+    cb.textContent='Continue to Results \u2192';
     cb.onclick=function(){showSection('results');};
     s5Card.appendChild(cb);
   }
-  const total=scores.l+scores.v+scores.w+scores.s+scores.g;
-  document.getElementById('finalPct').textContent=Math.round(total/57*100)+'%';
+  const total=scores.l+scores.v+scores.s+scores.g;
+  document.getElementById('finalPct').textContent=Math.round(total/37*100)+'%';
   document.getElementById('studentDisplay').textContent=name;
   document.getElementById('scL').textContent=scores.l+'/3';
   document.getElementById('scV').textContent=scores.v+'/6';
-  document.getElementById('scW').textContent=scores.w+'/20';
+  document.getElementById('scW').textContent='\uD83D\uDC69\u200D\uD83C\uDFEB';
   document.getElementById('scS').textContent=scores.s+'/20';
   document.getElementById('scG').textContent=scores.g+'/8';
   showSection('results');
 }
 function reviewGrammar(){showSection('s5');}
-function directSubmit(classLabel){const total=scores.l+scores.v+scores.w+scores.s+scores.g;const totalPct=Math.round(total/57*100)+'%';const form=document.createElement('form');form.method='POST';form.action='https://docs.google.com/forms/d/e/1FAIpQLSdrVV8m2p8QcgXK-ifK2H6By1kwAdcPm-Yp5SyB6DBgfOTiGw/formResponse';form.target='hidden_iframe';form.style.display='none';const fields={'entry.154629934':name,'entry.771629595':classLabel,'entry.1564061356':'1','entry.1994438750':scores.l+'/3','entry.1169985852':scores.v+'/6','entry.66378887':scores.w+'/20','entry.665897330':scores.s+'/20','entry.1528226896':scores.g+'/8','entry.543147037':totalPct,'entry.301386877':writingText||'','entry.1035810181':spokenText||'','entry.1451249480':'Angela Gradiska'};Object.keys(fields).forEach(key=>{const input=document.createElement('input');input.type='hidden';input.name=key;input.value=fields[key];form.appendChild(input);});let iframe=document.getElementById('hidden_iframe');if(!iframe){iframe=document.createElement('iframe');iframe.name='hidden_iframe';iframe.id='hidden_iframe';iframe.style.display='none';document.body.appendChild(iframe);}document.body.appendChild(form);form.submit();form.remove();alert('Homework submitted successfully.');}
 
 function initQuestions(){const rQs=shuffle([...readingQBank]).slice(0,3);let rHTML='';rQs.forEach((q,i)=>{const opts=q.opts.map((t,idx)=>({text:t,isCorrect:idx===q.correct}));shuffle(opts);readingAnswers[i]=opts.findIndex(o=>o.isCorrect);rHTML+=`<div class="question"><h4>${i+1}. ${q.q}</h4>`;opts.forEach((opt,j)=>rHTML+=`<div class="option" onclick="sel(this)" data-v="${j}"><div class="circle"></div>${opt.text}</div>`);rHTML+='</div>';});document.getElementById('readingQuestions').innerHTML=rHTML;let bankHTML='',dropHTML='';const pairs=shuffle([...vocabPairs]);const words=shuffle(pairs.map(p=>p.word));words.forEach(w=>bankHTML+=`<div class="word" onclick="pickWord(this)">${w}</div>`);pairs.forEach(p=>dropHTML+=`<div class="drop-row"><div class="drop-def">${p.def}</div><div class="drop-target" data-a="${p.word}" onclick="dropWord(this)"></div></div>`);document.getElementById('wordBank').innerHTML=bankHTML;document.getElementById('vocabDrops').innerHTML=dropHTML;const gQs=shuffle([...grammarQBank]);let gHTML='';gQs.forEach((q,i)=>{const opts=q.opts.map((t,idx)=>({text:t,isCorrect:idx===q.correct}));shuffle(opts);grammarAnswers[i]=opts.findIndex(o=>o.isCorrect);gHTML+=`<div class="question" data-c="${grammarAnswers[i]}"><h4>${i+1}. ${q.q}</h4>`;opts.forEach((opt,j)=>gHTML+=`<div class="option" onclick="sel(this)" data-v="${j}"><div class="circle"></div>${opt.text}</div>`);gHTML+='</div>';});document.getElementById('grammarQuestions').innerHTML=gHTML;}
 document.getElementById('writing').addEventListener('input',function(){document.getElementById('wc').textContent=this.value.trim().split(/\s+/).filter(Boolean).length;});
 
-async function checkWriting(){
+function checkWriting(){
   writingText = document.getElementById('writing').value || '';
   const raw = writingText.trim();
-
-  if (!raw) {
-    scores.w = 0;
-    document.getElementById('wFeedback').innerHTML = '<b>Score: 0/20</b><br>Please write something to receive a writing score.';
-    document.getElementById('wFeedback').classList.remove('hidden');
-    document.getElementById('wBtn').classList.add('hidden');
-    document.getElementById('wNext').classList.remove('hidden');
-    return;
-  }
-
-  const btn = document.getElementById('wBtn');
-  btn.disabled = true;
-  btn.textContent = 'Grading... ✏️';
-
-  const systemPrompt = `You are Angela, a warm and encouraging English teacher grading C1-level adult ESL writing homework. Be GENEROUS and ENCOURAGING — these are working adults squeezing in homework after a long day, and your job is to motivate them.
-
-GRADING CRITERIA (score out of 20 — start at 14 for any honest attempt of 30+ words):
-- Content & Task Response (0–6): Did they engage with the topic of communication, teamwork, or workplace? Even partial connection counts.
-- Language Quality & Grammar (0–6): Are sentences mostly understandable? Small errors are FINE at this level — only deduct for systematic problems (multiple sentences with the same broken pattern).
-- Vocabulary & Range (0–4): Did they use any varied vocabulary? Common workplace words count.
-- Structure & Clarity (0–4): Can you follow their meaning? Even short responses with a clear point earn 3-4 here.
-
-LENIENT FLOORS (apply BEFORE deducting):
-- Any honest 30+ word attempt: minimum 14/20
-- Any honest 50+ word attempt with at least 1 conditional: minimum 16/20
-- Excellent writing should reach 18-20/20
-
-CONDITIONALS — flexible recognition:
-- Accept "If X, Y will/can/should..." (first conditional)
-- Accept "When X, Y..." (zero conditional)
-- Accept "If X happens, Y" or "X if Y" — order doesn't matter
-- Don't require EXACTLY 2 — even 1 well-formed conditional is good. Mention if they could add more, but don't penalize heavily.
-
-SPECIFIC THINGS TO MENTION GENTLY (only if they appear, max 2 corrections):
-- "each other" is two words (not "eachother")
-- "every day" (each day) vs "everyday" (ordinary)
-- Capitalization at sentence start
-
-TONE RULES — this is very important:
-- Always start with a SPECIFIC strength from their writing
-- Use a warm, supportive tone with occasional emojis (😊 ✨) — not overdone
-- Maximum 2 corrections, framed as helpful tips
-- End with an encouraging note
-- NEVER use phrases like "however" or "but" before corrections — use "One small tip:" or "For next time:"
-
-OUTPUT FORMAT — respond ONLY with valid JSON, no markdown fences:
-{
-  "score": <number 0-20>,
-  "feedback": "<HTML string with feedback. Use <br> for line breaks. Highlight the score with <b>Score: X/20</b> at the top. Then give 2-4 bullet points using • symbol. Keep total length under 120 words.>"
-}`;
-
-  const userPrompt = `Please grade this C1 student writing response:\n\n"${raw}"`;
-
-  try {
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        system: systemPrompt,
-        messages: [{ role: "user", content: userPrompt }]
-      })
-    });
-
-    const data = await response.json();
-    const text = data.content.map(i => i.text || "").join("");
-    const clean = text.replace(/```json|```/g, "").trim();
-    const parsed = JSON.parse(clean);
-
-    scores.w = Math.min(20, Math.max(0, Math.round(parsed.score)));
-    document.getElementById('wFeedback').innerHTML = parsed.feedback;
-    document.getElementById('wFeedback').classList.remove('hidden');
-    btn.classList.add('hidden');
-    document.getElementById('wNext').classList.remove('hidden');
-
-  } catch (err) {
-    // Graceful fallback if API fails
-    const words = raw.split(/\s+/).filter(Boolean).length;
-    const hasConditional = /\b(if|when)\b.*\b(will|would|can|could)\b/i.test(raw);
-    let fallbackScore = words >= 50 ? 17 : words >= 30 ? 15 : words >= 15 ? 13 : 10;
-    if (hasConditional) fallbackScore += 1;
-    scores.w = Math.min(20, fallbackScore);
-    document.getElementById('wFeedback').innerHTML = `<b>Score: ${scores.w}/20</b><br>• Good effort! Keep working on using conditionals and C1-level vocabulary. 😊`;
-    document.getElementById('wFeedback').classList.remove('hidden');
-    btn.classList.add('hidden');
-    document.getElementById('wNext').classList.remove('hidden');
-  }
+  const words = raw ? raw.split(/\s+/).filter(Boolean).length : 0;
+  if (words < 15) { alert('Please write at least 15 words'); return; }
+  const fb = document.getElementById('wFeedback');
+  fb.innerHTML = '<strong>\u2713 Writing Saved</strong><br>'
+    + 'Word count: ' + words
+    + '<br><br><span style="color:#15803d">\uD83D\uDC69\u200D\uD83C\uDFEB <b>Your teacher will read and grade your writing personally.</b></span>'
+    + '<br><span style="color:#555;font-size:0.92em">Writing isn\'t scored automatically because language quality needs a real reader. Your teacher will follow up with your writing score and feedback.</span>';
+  fb.classList.remove('hidden');
+  document.getElementById('wBtn').classList.add('hidden');
+  document.getElementById('wNext').classList.remove('hidden');
 }
 
 function checkSpeaking(){scores.s=recTime>=18?18:12;document.getElementById('sFeedback').innerHTML='<b>Score: '+scores.s+'/20</b><br>Speaking is scored mainly on coherence, control, and use of lesson language.';document.getElementById('sFeedback').classList.remove('hidden');showSection('s5');}
@@ -242,17 +163,17 @@ function submitToTeacher(){
   const btn = document.getElementById('submitBtn');
   if(btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
 
-  const total = scores.l + scores.v + scores.w + scores.s + scores.g;
-  const totalPct = Math.round(total / 57 * 100) + '%';
+  const total = scores.l + scores.v + scores.s + scores.g;
+  const totalPct = Math.round(total / 37 * 100) + '%';
   const cls = document.getElementById('className') ? document.getElementById('className').value : '';
-  const teacherVal = document.getElementById('teacherName') ? document.getElementById('teacherName').value : 'Angela Gradiska';
+  const teacherVal = document.getElementById('teacherName') ? document.getElementById('teacherName').value : '';
   const fields = {
     'entry.154629934': name,
     'entry.771629595': cls,
     'entry.1564061356': '1',
     'entry.1994438750': scores.l + '/3',
     'entry.1169985852': scores.v + '/6',
-    'entry.66378887': scores.w + '/20',
+    'entry.66378887': 'Teacher will grade',
     'entry.665897330': scores.s + '/20',
     'entry.1528226896': scores.g + '/8',
     'entry.543147037': totalPct,
@@ -274,7 +195,7 @@ function submitToTeacher(){
     // Show success message
     const status = document.getElementById('submitStatus');
     if(status){
-      status.innerHTML = '✅ <strong>Homework submitted successfully!</strong><br><span style="font-size:0.9em;color:#555">Your teacher has received your work.</span><br><br><button onclick="location.reload()" style="margin-top:8px;padding:10px 20px;background:#5B5091;color:#fff;border:none;border-radius:10px;font-size:15px;cursor:pointer;font-family:inherit">🔄 Retake Homework</button>';
+      status.innerHTML = '\u2705 <strong>Homework submitted successfully!</strong><br><span style="font-size:0.9em;color:#555">Your teacher has received your work.</span><br><br><button onclick="location.reload()" style="margin-top:8px;padding:10px 20px;background:#5B5091;color:#fff;border:none;border-radius:10px;font-size:15px;cursor:pointer;font-family:inherit">\uD83D\uDD04 Retake Homework</button>';
       status.style.display = 'block';
     }
     if(btn){ btn.style.display = 'none'; }
