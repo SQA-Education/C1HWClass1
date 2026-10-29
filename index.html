@@ -169,9 +169,18 @@ function checkSpeaking(){
     try{var ts=document.getElementById('sqaTypeSpeak');if(ts){ts.scrollIntoView({behavior:'smooth',block:'center'});ts.focus();}}catch(e){}
     return;
   }
-  scores.s=recTime>=18?18:12;
-  fb.innerHTML='<b>Score: '+scores.s+'/20</b><br>Speaking is scored mainly on coherence, control, and use of lesson language.';
-  fb.classList.remove('hidden');showSection('s5');
+  /* Score the ACTUAL answer with AI (relevance + language), not recording time. */
+  var sBtn=document.getElementById('sBtn');
+  var taskEl=document.querySelector('#s4 .small')||document.querySelector('#s4 p');
+  var task=taskEl?(taskEl.textContent||'').trim():'';
+  var level=(typeof LV!=='undefined'&&LV)?LV:'';
+  fb.innerHTML='⏳ Scoring your answer…';fb.classList.remove('hidden');
+  if(sBtn)sBtn.disabled=true;
+  var finish=function(sc,reason){ scores.s=sc; fb.innerHTML='<b>Score: '+sc+'/20</b>'+(reason?('<br>'+reason):''); fb.classList.remove('hidden'); if(sBtn)sBtn.disabled=false; showSection('s5'); };
+  fetch('https://ponilnhyehnzycspksah.supabase.co/functions/v1/transcribe-drive',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({scoreSpeaking:true,transcript:t,task:task,level:level})})
+    .then(function(r){return r.json();})
+    .then(function(d){ if(d&&typeof d.score==='number'){ finish(d.score, d.reason||''); } else { finish(10,'Saved — your teacher will review your speaking.'); } })
+    .catch(function(){ finish(10,'Saved — your teacher will review your speaking.'); });
 }
 function submitToTeacher(){
   // Prevent double submission
