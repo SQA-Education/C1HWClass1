@@ -156,7 +156,23 @@ function checkWriting(){
   document.getElementById('wNext').classList.remove('hidden');
 }
 
-function checkSpeaking(){scores.s=recTime>=18?18:12;document.getElementById('sFeedback').innerHTML='<b>Score: '+scores.s+'/20</b><br>Speaking is scored mainly on coherence, control, and use of lesson language.';document.getElementById('sFeedback').classList.remove('hidden');showSection('s5');}
+function checkSpeaking(){
+  /* No transcript = no score. If nothing was recognized AND nothing typed, ask them to
+     try again or type what they said, and don't advance. Additive gate only. */
+  var t=(typeof spokenText!=='undefined'&&spokenText)?(''+spokenText).trim():'';
+  if(t.length<2&&window.__typedSpeech)t=(''+window.__typedSpeech).trim();
+  if(t.length<2){var b=document.getElementById('transcriptBox');if(b){var bt=((b.textContent)||'').replace(/^transcript:\s*/i,'').trim();if(bt.length>1)t=bt;}}
+  var fb=document.getElementById('sFeedback');
+  if(t.length<2){
+    fb.innerHTML='<b>We didn’t catch what you said.</b><br>Please tap the circle and record again, speaking clearly — or type what you said in the box below — then press Continue.';
+    fb.classList.remove('hidden');
+    try{var ts=document.getElementById('sqaTypeSpeak');if(ts){ts.scrollIntoView({behavior:'smooth',block:'center'});ts.focus();}}catch(e){}
+    return;
+  }
+  scores.s=recTime>=18?18:12;
+  fb.innerHTML='<b>Score: '+scores.s+'/20</b><br>Speaking is scored mainly on coherence, control, and use of lesson language.';
+  fb.classList.remove('hidden');showSection('s5');
+}
 function submitToTeacher(){
   // Prevent double submission
   const btn = document.getElementById('submitBtn');
