@@ -65,35 +65,62 @@ function dropWord(target){
 }
 function checkS2(){let c=0;document.querySelectorAll('.drop-target').forEach(t=>{if(t.textContent===t.dataset.a)c++;});scores.v=c;showSection('s3');}
 function toggleRec(){if(!isRec) startRec(); else stopRec();}
+/* SQA speaking v2 (2026-10-29): record real audio with MediaRecorder (works on iPhones,
+   unlike the Web Speech API) and transcribe server-side with ElevenLabs Scribe. Sets
+   spokenText from the real transcript, which the Form + portal-save layers already consume.
+   Typed fallback (sqaTypeSpeak textarea) stays available if the mic/transcription fails. */
 function startRec(){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){alert('Speech recognition not supported in this browser.');return;}
   spokenText='';
-  const box=document.getElementById('transcriptBox');
-  box.textContent='';box.classList.add('hidden');
-  isRec=true;recTime=0;
-  document.getElementById('recBtn').classList.add('recording');
-  document.getElementById('recStatus').textContent='Recording... Click again to stop';
-  recTimer=setInterval(()=>{recTime++;document.getElementById('timer').textContent=Math.floor(recTime/60)+':'+String(recTime%60).padStart(2,'0');},1000);
-  recognition=new SR();
-  recognition.continuous=false;
-  recognition.interimResults=false;
-  recognition.lang='en-US';
-  recognition.onresult=function(e){
-    spokenText+=e.results[0][0].transcript+' ';
-    box.textContent='Transcript: '+spokenText.trim();
-    box.classList.remove('hidden');
-  };
-  recognition.onerror=function(){};
-  recognition.onend=function(){ if(isRec){ try{recognition.start();}catch(e){} } };
-  try{recognition.start();}catch(e){}
+  var box=document.getElementById('transcriptBox');
+  if(box){box.textContent='';box.classList.add('hidden');}
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){
+    alert('Your browser can’t record audio here. Please open this page in Safari or Chrome, or type what you said in the box below.');
+    return;
+  }
+  navigator.mediaDevices.getUserMedia({audio:true}).then(function(stream){
+    window.__micStream=stream; window.__chunks=[];
+    var mime='';
+    ['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/aac','audio/ogg'].some(function(m){try{if(window.MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(m)){mime=m;return true;}}catch(e){}return false;});
+    try{ window.__mr = mime ? new MediaRecorder(stream,{mimeType:mime}) : new MediaRecorder(stream); }
+    catch(e){ try{window.__mr=new MediaRecorder(stream);}catch(e2){alert('Could not start recording. Please type what you said below.');return;} }
+    window.__chunks=[];
+    window.__mr.ondataavailable=function(e){ if(e.data&&e.data.size>0) window.__chunks.push(e.data); };
+    window.__mr.onstop=function(){ finalizeRec(); };
+    window.__mr.start();
+    isRec=true;recTime=0;
+    document.getElementById('recBtn').classList.add('recording');
+    document.getElementById('recStatus').textContent='Recording... Click again to stop';
+    recTimer=setInterval(function(){recTime++;document.getElementById('timer').textContent=Math.floor(recTime/60)+':'+String(recTime%60).padStart(2,'0');},1000);
+  }).catch(function(err){
+    document.getElementById('recStatus').textContent='Microphone blocked';
+    alert('We couldn’t access your microphone. Please allow mic access, or type what you said in the box below.');
+  });
 }
 function stopRec(){
   isRec=false;clearInterval(recTimer);
-  if(recognition){try{recognition.stop();}catch(e){} recognition=null;}
   document.getElementById('recBtn').classList.remove('recording');
-  document.getElementById('recStatus').textContent='Recording saved!';
-  document.getElementById('sBtn').disabled=false;
+  document.getElementById('recStatus').textContent='Processing your recording…';
+  try{ if(window.__mr&&window.__mr.state!=='inactive'){ window.__mr.stop(); } else { finalizeRec(); } }catch(e){ finalizeRec(); }
+  try{ if(window.__micStream) window.__micStream.getTracks().forEach(function(t){t.stop();}); }catch(e){}
+}
+function finalizeRec(){
+  var box=document.getElementById('transcriptBox');
+  var type=(window.__mr&&window.__mr.mimeType)||'audio/webm';
+  var blob=new Blob(window.__chunks||[],{type:type});
+  var done=function(){ try{document.getElementById('sBtn').disabled=false;}catch(e){} try{document.getElementById('recStatus').textContent='Recording saved!';}catch(e){} };
+  try{ var a=document.getElementById('audio'); if(a){a.src=URL.createObjectURL(blob);a.classList.remove('hidden');} }catch(e){}
+  if(blob.size<1500){ if(box){box.textContent='We couldn’t hear anything — re-record, or type what you said below.';box.classList.remove('hidden');} done(); return; }
+  if(box){box.textContent='Transcribing…';box.classList.remove('hidden');}
+  var ext=type.indexOf('mp4')>-1?'mp4':(type.indexOf('ogg')>-1?'ogg':'webm');
+  var fd=new FormData(); fd.append('audio',blob,'speech.'+ext);
+  fetch('https://ponilnhyehnzycspksah.supabase.co/functions/v1/transcribe-drive',{method:'POST',body:fd})
+    .then(function(r){return r.json();})
+    .then(function(d){
+      spokenText=(d&&d.text)?(''+d.text).trim():'';
+      if(box){ box.textContent = spokenText ? ('Transcript: '+spokenText) : 'We saved your recording but couldn’t make out the words — re-record, or type what you said below.'; }
+      done();
+    })
+    .catch(function(){ if(box){box.textContent='Recording saved. If the transcript stays blank, type what you said below.';} done(); });
 }
 function submitFinal(){
   let c=0;
@@ -455,8 +482,9 @@ try{
   try{
     var ua=navigator.userAgent||"";
     var inApp=/(WhatsApp|Instagram|FBAN|FBAV|FB_IAB|Line\/|Snapchat|Messenger|TikTok|MicroMessenger|GSA)/i.test(ua);
-    var noSpeech=(typeof window.SpeechRecognition==="undefined" && typeof window.webkitSpeechRecognition==="undefined");
-    if(!inApp && !noSpeech) return;
+    /* v2: MediaRecorder works in iPhone Safari even though the Web Speech API doesn't,
+       so only nudge for genuine in-app browsers (WhatsApp/IG/etc.) that block the mic. */
+    if(!inApp) return;
     function anchor(){
       var el=document.getElementById("transcript")||document.getElementById("transcriptBox")||document.getElementById("speakTranscriptText")||document.getElementById("speakTranscriptBox")||document.getElementById("sqaTypeSpeak");
       if(el) return el;
