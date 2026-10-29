@@ -100,27 +100,34 @@ function stopRec(){
   isRec=false;clearInterval(recTimer);
   document.getElementById('recBtn').classList.remove('recording');
   document.getElementById('recStatus').textContent='Processing your recording…';
-  try{ if(window.__mr&&window.__mr.state!=='inactive'){ window.__mr.stop(); } else { finalizeRec(); } }catch(e){ finalizeRec(); }
-  try{ if(window.__micStream) window.__micStream.getTracks().forEach(function(t){t.stop();}); }catch(e){}
+  /* flush + stop; keep the mic stream alive until onstop fires (iOS truncates otherwise) */
+  try{ if(window.__mr&&window.__mr.state!=='inactive'){ try{window.__mr.requestData();}catch(e){} window.__mr.stop(); } else { finalizeRec(); } }catch(e){ finalizeRec(); }
 }
 function finalizeRec(){
   var box=document.getElementById('transcriptBox');
+  var st=document.getElementById('recStatus');
   var type=(window.__mr&&window.__mr.mimeType)||'audio/webm';
   var blob=new Blob(window.__chunks||[],{type:type});
-  var done=function(){ try{document.getElementById('sBtn').disabled=false;}catch(e){} try{document.getElementById('recStatus').textContent='Recording saved!';}catch(e){} };
+  var kb=Math.round(blob.size/1024);
+  try{ if(window.__micStream) window.__micStream.getTracks().forEach(function(t){t.stop();}); }catch(e){}
+  var done=function(){ try{document.getElementById('sBtn').disabled=false;}catch(e){} };
   try{ var a=document.getElementById('audio'); if(a){a.src=URL.createObjectURL(blob);a.classList.remove('hidden');} }catch(e){}
-  if(blob.size<1500){ if(box){box.textContent='We couldn’t hear anything — re-record, or type what you said below.';box.classList.remove('hidden');} done(); return; }
-  if(box){box.textContent='Transcribing…';box.classList.remove('hidden');}
+  if(box)box.classList.remove('hidden');
+  if(blob.size<1500){ if(st)st.textContent='⚠️ No sound was recorded ('+kb+' KB). Tap record and speak again, or type what you said below.'; if(box)box.textContent=''; done(); return; }
+  if(st)st.textContent='⏳ Transcribing your '+kb+' KB recording…';
+  if(box)box.textContent='';
   var ext=type.indexOf('mp4')>-1?'mp4':(type.indexOf('ogg')>-1?'ogg':'webm');
   var fd=new FormData(); fd.append('audio',blob,'speech.'+ext);
   fetch('https://ponilnhyehnzycspksah.supabase.co/functions/v1/transcribe-drive',{method:'POST',body:fd})
     .then(function(r){return r.json();})
     .then(function(d){
       spokenText=(d&&d.text)?(''+d.text).trim():'';
-      if(box){ box.textContent = spokenText ? ('Transcript: '+spokenText) : 'We saved your recording but couldn’t make out the words — re-record, or type what you said below.'; }
+      try{window.__typedSpeech=spokenText||window.__typedSpeech;}catch(e){}
+      if(spokenText){ if(st)st.textContent='✓ Transcript saved ('+spokenText.length+' characters)'; if(box)box.textContent='Transcript: '+spokenText; }
+      else { if(st)st.textContent='⚠️ We recorded '+kb+' KB but couldn’t make out words. Re-record clearly, or type what you said below.'; if(box)box.textContent=''; }
       done();
     })
-    .catch(function(){ if(box){box.textContent='Recording saved. If the transcript stays blank, type what you said below.';} done(); });
+    .catch(function(err){ if(st)st.textContent='⚠️ Couldn’t reach the transcriber. Your recording is saved — please type what you said below.'; if(box)box.textContent=''; done(); });
 }
 function submitFinal(){
   let c=0;
