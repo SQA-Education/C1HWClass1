@@ -331,6 +331,7 @@ function submitToTeacher(){
     var KEY='sqa_enrolled_ok';
     if(localStorage.getItem(KEY)==='1') return;
     var Q=new URLSearchParams(location.search);
+    if(Q.get('preview')==='sqa') return;   // admin preview — skip the gate (view/test only)
     var sid=(Q.get('sid')||'').trim(), email=(Q.get('email')||'').trim();
     var FN="https://ponilnhyehnzycspksah.supabase.co/functions/v1/submit-final";
     var PUB="sb_publishable_YWM3O7i8aHWBGOZM-vAnEw_bR4XStKm";
